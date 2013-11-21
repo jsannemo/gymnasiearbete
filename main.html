@@ -1,0 +1,125 @@
+<doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Färgning av grafer</title>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script type="text/javascript" src="http://processingjs.org/js/processing.min.js"></script>
+		<script type="text/javascript">
+			MathJax.Hub.Config({
+			"HTML-CSS": { scale: 250}
+			});
+		</script>
+		<link rel="stylesheet" type="text/css" href="main.css" />
+	</head>
+	<body>
+		<article>
+			<header>
+				<h1>Graffärgning</h1>
+			</header>
+			<section id="preword">
+				<h1>Introduktion</h1>
+				<p>
+					Detta är en interaktiv introduktion till det kombinatoriska området om grafer och färgningar av dem. Den försöker göra
+					svår matematik mer tillgänglig genom att använda sig av illustrationer och mer lättförståeliga förklaringar
+					än vad man hittar i forskningsartiklar och läroböcker. Den kommer långsamt bygga upp förkunskaperna som krävs för att
+					förstå och tre algoritmer som löser ett problem inom det matematiska området som kallas <em>kombinatorisk optimering</em>.
+			</section>
+			<section id="applications">
+				<h1>Akvarier, scheman, och sudokun</h1>
+				<p>
+					En djurpark har nyligen köpt in ett antal fiskar av olika sorter. Det visade sig dock
+					att vissa av fiskarna föredrog att äta upp andra fiskar istället för djurparkens fiskmat.
+					Parkens ledning bestämde sig för att det lättaste var att placera arter som riskerar
+					att ätas i olika akvarier. De undrar nu hur många olika akvarier som måste köpas in för
+					att kunna placera alla fiskar.
+				<p>
+					I exemplet nedan har vi sex olika sorters fiskar, med färgerna blå, grön, gul, röd, lila och cyan. Tabellen till vänster
+					visar vilka fiskar som äter varandra. Varje par av fiskar som inte kan vara i samma akvarie har en röd kvadrat. Om fiskarna
+					istället kan vara i samma akvarie får de en grön kvadrat. Det visar sig att det alltid går att placera in fiskarna
+					i tre olika akvarier, men inte i två. Prova själv!
+				<canvas id="aquariumDemo" data-processing-sources="aquarium.pde"></canvas>
+				<p>
+					En skola ska göra ett schema åt sina elever. Man har redan bestämt mellan under vilka tider de olika lektionerna
+					ska pågå, och nu undrar man hur många olika lektionssalar man behöver för att schemalägga lektionerna
+					så att inga två lektioner är i samma sal samtidigt
+				<p>
+
+				<p>
+					Sudoku är ett logikspel som baseras på att placera ut siffror i ett rutnät med 9 rader och kolumner, så
+					att varje rad, kolumn, och 3x3-kvadrat innehåller siffrorna 1-9 precis en gång. Pusslet
+					är till en början delvist ifyllt med några siffror. Pusslet går ut på slutföra ifyllningen.
+				<p>
+					Dessa tre problem som vid en första anblick kan verka helt orelaterade, är faktiskt starkt kopplade till varandra. De baseras nämligen på samma matematiska problem
+					som vi kommer att studera, det om <em>graffärgning</em>.
+			</section>
+			<section id="sets">
+				<h1>Mängder</h1>
+				<p>
+					Vi ska nu börja fördjupa oss i de matematiska avgrunderna som är kombinatorik. Först och främst
+					ett lite lättsmält smakprov: teorin om mängder.
+				<p>
+					En <em>mängd</em> är nästan precis vad det låter som - en samling av objekt, <em>element</em> som alla är olika. Vi kan t.ex. betrakta mängden bokstäver
+					i det engelska alfabetet a, b, ..., x, y och z , mängden länder i norden: Danmark, Finland, Island, Norge och Sverige eller mängden
+					som inte innehåller någonting alls. Den kallas för den <em>tomma mängden</em> och har den speciella beteckningen \( \emptyset \).
+				<p>
+					Oftast skrivs en mängd som dess element mellan två måsvingar. Mänderna ovan skulle då skrivas som \( \{a, b, ..., y, z\} \) och
+					\( \{ \)Danmark, Finland, Island, Norge, Sverige\( \} \). Vi kan också blanda elementen i olika mängder. \( \{ a, b, 1, 2, \) Sverige\( \} \)
+					är också en mängd.
+				<p>
+					När man har fler än en mängd kan man visualisera deras förhållanded med hjälp av ett <em>Venn-diagram</em>.
+				<p>
+					Om \(A\) och \(B\) är mängder kan vi utföra olika handlingar på dem. Vi kanske skulle vilja titta på mängden som vi får om vi slår ihop mängderna.
+					Denna nya mängden kallas för <em>unionen</em> av mängderna och har beteckningen \( A \cup B \). Unionen av de två mängderna \( A = \{ ko, apa, katt \} \) och
+					\( B = \{ katt, hund, fisk \} \) blir alltså \( A \cup B = \{ko, apa, katt, hund, fisk \} \).
+				<p>
+					Motsvarande kan vi beräkna mängden som består av alla element som finns i <em>båda</em> mängderna. Detta kallas istället för mängdernas <em>snitt</em> och skrivs som
+					\( A \cap B \). Snittet av samma två mängder \( A = \{ ko, apa, katt \} \) och
+					\( B = \{ katt, hund, fisk \} \) är således \( A \cap B = \{katt \} \).
+				<p>
+					Om varje element i mängden \( A \) också finns i mängden \( B \) säger vi att \( A \) är en delmängd till \( B \), och skriver detta som \( A \subset B \). I vårt förra exempel är \( A \) inte en delmängd av \( B \), eftersom elementet \( ko \) finns i \( A \) men inte i \( B \). Däremot är mängden \( \{ apelsin, kiwi \} \) en delmängd till \( \{ apelsin, kiwi, banan, mango \} \).
+				<p>
+					Slutligen finns det också ett skrivsätt för antalet element i en mängd. Detta kallas också för mängdens <em>kardinalitet</em>. Kardinaliteten för en mängd \( A \) skrivs som
+					\( |A| \). Så \( |\{1, 4, 9, 16 \}| = 4 \), \( |\{a, b, c\}| = 3 \) och \( |\emptyset| = 0 \).
+			</section>
+			<section id="pie">
+				<h1>PIE: Principen om inklusion och exklusion</h1>
+				<p>
+			</section>
+			<section id="graphs">
+				<h1>Hörn och kanter</h1>
+				<p>
+					Nu när vi har koll på mängder kan vi äntligen definera vad en <em>graf</em> är. Med graf menar vi inte grafen till en funktion, utan något helt annat.
+				<p>
+					Grafen är den struktur som vägnät, järnvägar och datornät har gemensam. I stora drag har vi en mängd saker (t.ex. korsningar, städer, eller datorer) som
+					på något sätt har ett samband mellan sig - i vårt fall kan olika korsningar vara sammanbundna av en väg, två städer kan ha en järnväg mellan sig, eller
+					två datorer kan vara ihopkopplade över Internet. Matematiskt beskriver vi detta samband med hjälp av två mängder som vi kallar \( V \) och \( E \).
+				<p>
+					Mängden \( V \) kallas för <em>hörn</em>, och består av sakerna som har samband mellan sig. Ett visst vägnät av motorvägar skulle kunna ha hörnen
+					\( V = \{Lund, Uppsala, Helsingborg, Karlstad, Stockholm\} \).
+				<p>
+					Den andra mängden, \( E \), är den som beskriver sambanden mellan våra hörn. Varje element i den mängden är ett par av två stycken hörn. I vårt exempel
+					med motorvägar mellan städer skulle vi kunna ha en kant mellan Stockholm och Uppsala.
+			</section>
+			<section id="coloring">
+				<h1>Att färga en graf</h1>
+				<p>
+					Så vad innebär detta mystiska graffärgningsproblem?
+				<p>
+					Vi ska nu visa tre olika sätt för att beräkna det kromatiska talet.
+			</section>
+			<section id="chrom-bruteforce">
+				<h1>Kromatiska talet: brute force</h1>
+				<p>
+			</section>
+			<section id="chrom-dp">
+				<h1>Kromatiska talet: dynamisk programmering</h1>
+				<p>
+			</section>
+			<section id="chrom-pie">
+				<h1>Kromatiska talet: inklusion/exklusion</h1>
+				<p>
+			</section>
+		</article>
+	</body>
+</html>
