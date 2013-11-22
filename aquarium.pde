@@ -1,28 +1,17 @@
-// Global variables
-float radius = 50.0;
-int X, Y;
-int nX, nY;
-int delay = 16;
-
 void setup(){
   size(800, 300);
   frameRate(60);
-
-  X = width / 2;
-  Y = height / 2;
-  nX = X;
-  nY = Y;
 }
 
 int nodes = 6;
 
 boolean[][] matrix = {
-	{true, false, false, false, true, false},
-	{false, true, true, true, true, false},
-	{false, true, true, true, false, true},
-	{false, true, true, true, false, true},
-	{true, true, false, false, true, false},
-	{false, false, true, true, false, true}
+	{true, false, false, true, false, true},
+	{false, true, false, false, false, true},
+	{false, false, true, false, true, false},
+	{true, false, false, true, true, false},
+	{false, false, true, true, true, true},
+	{true, true, false, false, true, true}
 };
 
 color[] colors = {#407EF1, #31ED2B, #FFF712, #FF122E, #B412FF, #12FFFF};
@@ -39,7 +28,6 @@ void drawMatrix(){
 	}
 	for(int x = 0; x < nodes; x++){
 		for(int y = 0; y < nodes; y++){
-			if(x == y) continue;
 			if(matrix[x][y]){
 				fill(#51FF12);
 			} else {
@@ -159,24 +147,9 @@ void drawTanks(){
 
 // Main draw loop
 void draw(){
-
-
   background( 255 );
-
-  noFill();
-  stroke(170);
-  strokeWeight(1);
-  rect(0, 0, width-1, height-1);
-
 
   drawMatrix();
   drawTanks();
   drawFish();
-}
-
-
-// Set circle's next destination
-void mouseMoved(){
-  nX = mouseX;
-  nY = mouseY;
 }

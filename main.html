@@ -5,12 +5,15 @@
 		<title>Färgning av grafer</title>
 		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 		<script type="text/javascript" src="http://processingjs.org/js/processing.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+		<script type="text/javascript" src="main.js"></script>
 		<script type="text/javascript">
 			MathJax.Hub.Config({
 			"HTML-CSS": { scale: 250}
 			});
 		</script>
 		<link rel="stylesheet" type="text/css" href="main.css" />
+		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 	</head>
 	<body>
 		<article>
@@ -28,38 +31,73 @@
 			<section id="applications">
 				<h1>Akvarier, scheman, och sudokun</h1>
 				<p>
+					Problemet som vi ska studera har många praktiska tillämpningar. Nedan ger vi tre exempel på problem som är relaterade till
+					graffärgning, och vi kommer senare studera metoder för hur vi kan lösa liknande problem.
+				<p>
 					En djurpark har nyligen köpt in ett antal fiskar av olika sorter. Det visade sig dock
 					att vissa av fiskarna föredrog att äta upp andra fiskar istället för djurparkens fiskmat.
 					Parkens ledning bestämde sig för att det lättaste var att placera arter som riskerar
 					att ätas i olika akvarier. De undrar nu hur många olika akvarier som måste köpas in för
 					att kunna placera alla fiskar.
+
+
 				<p>
 					I exemplet nedan har vi sex olika sorters fiskar, med färgerna blå, grön, gul, röd, lila och cyan. Tabellen till vänster
 					visar vilka fiskar som äter varandra. Varje par av fiskar som inte kan vara i samma akvarie har en röd kvadrat. Om fiskarna
 					istället kan vara i samma akvarie får de en grön kvadrat. Det visar sig att det alltid går att placera in fiskarna
-					i tre olika akvarier, men inte i två. Prova själv!
+					i tre olika akvarier, men inte i två. Prova själv genom att dra fiskarna till akvarierna.
 				<canvas id="aquariumDemo" data-processing-sources="aquarium.pde"></canvas>
+
+
 				<p>
 					En skola ska göra ett schema åt sina elever. Man har redan bestämt mellan under vilka tider de olika lektionerna
-					ska pågå, och nu undrar man hur många olika lektionssalar man behöver för att schemalägga lektionerna
-					så att inga två lektioner är i samma sal samtidigt
+					ska pågå, och nu undrar man hur många lektionssalar man behöver för att schemalägga lektionerna
+					så att inga två lektioner är i samma sal samtidigt.
+				<img src="schedules.svg" style="width: 100%; margin-top: 20px; margin-left: 20px;" />
 				<p>
+					Ovan finns ett exempel med 6 lektioner. Två lektioner kan placeras i samma sal även om den ena slutar
+					precis när den andra börjar. Hur många lektionssalar krävs alla lektioner ska kunna schemaläggas?
+				<div id="sol-scheduling" class="panel">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a class="panel-toggle" data-parent="#sol-scheduling" href="#">
+								<i class="fa fa-angle-right" data-icon-hide="fa-angle-down" data-icon-show="fa-angle-right"></i>
+								&nbsp;Visa lösning
+							</a>
+						</h4>
+					</div>
+					<div class="panel-body" id="sol-scheduling-content">
+						<p>
+							Vi kan rita en liknande tabell som vi gjorde för det förra exemplet, och markera för alla par av lektioner om vi kan placera båda lektioner
+							i samma lektionssal. Då inser vi att schemaläggningsproblemet kan lösas på samma sätt som akvarieproblemet (men inte tvärtom! Varför?).
+							Faktum är att tabellen i det här fallet råkar bli precis samma tabell som i det exemplet. Det krävs alltså 3 salar för schemaläggningen.
+						<p>
+							Ett annat sätt vi hade kunnat komma fram till denna slutsatsen var att titta på antalet lektioner som sker samtidigt. 11:45 har vi nämligen
+							3 lektioner som går under samma gång: den gröna, röda och gula lektionen. Vi måste alltså ha minst 3 salar för att schemaläggningen ska kunna
+							fungera. Vi kan nu prova oss fram för att hitta en schemaläggning som bara använder 3 salar.
+						<p>
+							Senare kommer vi lära oss bättre metoder för att hitta lösningar till problemet som inte går ut på att bara prova oss fram.
+					</div>
+				</div>
 
 				<p>
 					Sudoku är ett logikspel som baseras på att placera ut siffror i ett rutnät med 9 rader och kolumner, så
 					att varje rad, kolumn, och 3x3-kvadrat innehåller siffrorna 1-9 precis en gång. Pusslet
 					är till en början delvist ifyllt med några siffror. Pusslet går ut på slutföra ifyllningen.
 				<p>
-					Dessa tre problem som vid en första anblick kan verka helt orelaterade, är faktiskt starkt kopplade till varandra. De baseras nämligen på samma matematiska problem
-					som vi kommer att studera, det om <em>graffärgning</em>.
+					Vi såg en tydlig koppling mellan de två första problemen. Men vad har sudoku-pusslet gemensamt med dem? Jo, vi kan se de 81 rutorna i sudoku-pusslet
+					som våra fiskar, som ska placeras i 9 stycken akvarier. Att vi inte får använda samma siffra i två rader kan vi formulera som att inga två fiskar
+					som motsvarar rutor på samma rad får vara i samma akvarie. På samma sätt får vi liknande begränsningar på raderna och 3x3-kvadraterna. Sudoku går
+					alltså ut på att slutföra en placering av fiskar i akvarier givet att några fiskar <em>måste</em> vara i vissa akvarier (de siffror som redan är inskrivna
+					i pusslet).
 			</section>
 			<section id="sets">
 				<h1>Mängder</h1>
 				<p>
 					Vi ska nu börja fördjupa oss i de matematiska avgrunderna som är kombinatorik. Först och främst
-					ett lite lättsmält smakprov: teorin om mängder.
+					ett lättsmält smakprov: teorin om mängder.
 				<p>
-					En <em>mängd</em> är nästan precis vad det låter som - en samling av objekt, <em>element</em> som alla är olika. Vi kan t.ex. betrakta mängden bokstäver
+					En <em>mängd</em> är nästan precis vad det låter som - en samling av objekt, så kallade <em>element</em>, som alla är olika. Vi kan t.ex. betrakta mängden bokstäver
 					i det engelska alfabetet a, b, ..., x, y och z , mängden länder i norden: Danmark, Finland, Island, Norge och Sverige eller mängden
 					som inte innehåller någonting alls. Den kallas för den <em>tomma mängden</em> och har den speciella beteckningen \( \emptyset \).
 				<p>
@@ -67,15 +105,17 @@
 					\( \{ \)Danmark, Finland, Island, Norge, Sverige\( \} \). Vi kan också blanda elementen i olika mängder. \( \{ a, b, 1, 2, \) Sverige\( \} \)
 					är också en mängd.
 				<p>
-					När man har fler än en mängd kan man visualisera deras förhållanded med hjälp av ett <em>Venn-diagram</em>.
-				<p>
-					Om \(A\) och \(B\) är mängder kan vi utföra olika handlingar på dem. Vi kanske skulle vilja titta på mängden som vi får om vi slår ihop mängderna.
+					Om vi har fler mängder än en \(A\) och \(B\) är vi också intresserade av hur de förhåller sig till varandra. Vi kanske skulle vilja titta på mängden som vi får om vi slår ihop mängderna.
 					Denna nya mängden kallas för <em>unionen</em> av mängderna och har beteckningen \( A \cup B \). Unionen av de två mängderna \( A = \{ ko, apa, katt \} \) och
 					\( B = \{ katt, hund, fisk \} \) blir alltså \( A \cup B = \{ko, apa, katt, hund, fisk \} \).
 				<p>
 					Motsvarande kan vi beräkna mängden som består av alla element som finns i <em>båda</em> mängderna. Detta kallas istället för mängdernas <em>snitt</em> och skrivs som
 					\( A \cap B \). Snittet av samma två mängder \( A = \{ ko, apa, katt \} \) och
 					\( B = \{ katt, hund, fisk \} \) är således \( A \cap B = \{katt \} \).
+				<p>
+					Mängden som innehåller alla element från \( A \) men inga av elementen i \( B \) kallas för <em>differensen</em> mellan mängderna och uttrycks som \( A \setminus B \). Således är
+					\( \{ ko, apa, katt \} \setminus \{ katt, hund, fisk \}  = \{ko, apa\} \).
+				<canvas id="setsDemo" data-processing-sources="sets.pde"></canvas>
 				<p>
 					Om varje element i mängden \( A \) också finns i mängden \( B \) säger vi att \( A \) är en delmängd till \( B \), och skriver detta som \( A \subset B \). I vårt förra exempel är \( A \) inte en delmängd av \( B \), eftersom elementet \( ko \) finns i \( A \) men inte i \( B \). Däremot är mängden \( \{ apelsin, kiwi \} \) en delmängd till \( \{ apelsin, kiwi, banan, mango \} \).
 				<p>

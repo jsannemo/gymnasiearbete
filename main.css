@@ -29,10 +29,48 @@ h1 {
 	font-size: 2em;
 }
 
-canvas#aquariumDemo {
+canvas {
 	width: 100%;
 	height: 300px;
 	margin-top: 30px;
+}
+
+.panel {
+	background-color: rgb(255, 255, 255);
+	width: 100%;
+	padding: 0px 0 15px 0;
+}
+
+.panel-heading {
+	background-color: rgb(245, 245, 245);
+	display: block;
+	height: 34px;
+	padding: 0px;
+}
+
+.panel-title {
+	display: block;
+}
+
+.panel-toggle {
+	background-color: rgb(243, 243, 243);
+	color: rgb(96, 96, 96);
+	display: block;
+	font-size: 15px;
+	text-decoration: none;
+	border-color: rgb(217, 217, 217);
+	border-style: solid;
+	border-width: 1px;
+	height: 100%;
+	padding: 10px 0 0 10px;
+	position: relative;
+}
+
+.panel-body {
+	display: none;
+	padding: 20px 20px 20px 20px;
+	border: solid 1px;
+    border-color: rgb(217, 217, 217);
 }
 
 @media print {
