@@ -192,7 +192,17 @@
 					Det visar sig att problemen vi studerade i början kan formuleras rätt elegant med hjälp av grafer. I fallet med fiskarna har vi ju ett tydligt samband mellan
 					fiskarna. Antingen kan ett par av fiskar vara i samma akvarium, eller så kan de inte det. Om vi använder detta som vårt samband, och drar en kant mellan två
 					fiskar som äter upp varandra får vi följande graf:
-
+					<canvas id="graphsDemo" data-processing-sources="graphs.pde"></canvas>
+				<p>
+					Att dela in alla fiskar i akvarier är nu samma sak som att ge varje hörn i grafen ett nummer, så att inga två hörn som är grannar har samma nummer. Dessa
+					nummer indikerar vilket akvarium en viss fisk ska placeras i. Att inga grannar har samma nummer betyder att inget par av fiskar vill äta varandra. Om du klickar
+					på ett hörn ändras dess nummer. Ändra numrena så att inga grannar har samma nummer.
+				<p>
+					Vi kallar numrena som vi ger till varje hörn för <em>färger</em>. Graffärgningsproblemet går ut på hitta en giltig färgning av en graf som använder så få
+					färger som möjligt.
+				<p>
+					Det minsta antalet färger som vi behöver för att färga en graf kallas för det <em>kromatiska talet</em>. Vi kommer beskriva tre olika metoder, <em>algoritmer</em>,
+					som räknar ut det kromatiska talet för en graf. En intressant 
 			</section>
 			<section id="chrom-bruteforce">
 				<h1>Kromatiska talet: brute force</h1>

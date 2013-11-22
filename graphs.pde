@@ -1,96 +1,89 @@
 void setup(){
-	size(800, 300);
-	frameRate(60);
+  size(800, 300);
+  frameRate(60);
+  for(int i = 0; i < nodes; i++)
+	for(int j = 0; j < nodes; j++)
+		matrix[i][j] = !matrix[i][j];
 }
 
-int items = 6;
+int nodes = 6;
+
+boolean[][] matrix = {
+	{true, false, false, true, false, true},
+	{false, true, false, false, false, true},
+	{false, false, true, false, true, false},
+	{true, false, false, true, true, false},
+	{false, false, true, true, true, true},
+	{true, true, false, false, true, true}
+};
 
 color[] colors = {#407EF1, #31ED2B, #FFF712, #FF122E, #B412FF, #12FFFF};
 
-PFont arial = loadFont("Arial");
-
-boolean[][] inSet = {
-	{true, true},
-	{false, false},
-	{false, true},
-	{true, false},
-	{false, false},
-	{false, false}
+int[][] nodePositions = {
+	{340, 180},
+	{320, 50},
+	{390, 120},
+	{450, 100},
+	{250, 220},
+	{440, 200},
 };
 
-void drawSets(){
-	fill(0);
-	textFont(arial, 30);
-	text("A", 60, 30);
-	text("B", 100, 30);
-	for(int i = 0; i < items; i++){
+void mouseReleased() {
+	lockedFish = -1;
+}
+
+int[] aq = {1, 1, 1, 1, 1, 1};
+
+void drawNodes(){
+	strokeWeight(1);
+	stroke(0);
+
+	for(int i = 0; i < nodes; i++){
 		fill(colors[i]);
-		ellipse(30, 60 + i * 40, 15, 15);
-		for(int j = 0; j < 2; j++){
-			if(inSet[i][j]){
-				cs[j]++];
-				fill(0);
-			} else {
-				fill(255);
+		int x = nodePositions[i][0];
+		int y = nodePositions[i][1];
+		ellipse(x, y, 30, 30);
+		fill(0);
+		text(aq[i], x-3, y+3);
+	}
+}
+
+void drawEdges(){
+	for(int i = 0; i < nodes; i++)
+		for(int j = 0; j < i; j++){
+			if(matrix[i][j]){
+				if(aq[i] == aq[j]){
+					stroke(#FF122E);
+				} else {
+					stroke(0);
+				}
+				line(nodePositions[i][0], nodePositions[i][1], nodePositions[j][0], nodePositions[j][1]);
 			}
-			rect(62 + 40 * j, 52 + i * 40, 15, 15);
 		}
-	}
-	textFont(arial, 15);
-}
-
-int[] cs = {0, 0};
-
-void drawSet(int i){
-	stroke(0);
-	fill(255);
-	ellipse(200 + 70*i, 60, 60, 60);
-
-	fill(0);
-	text(i == 0 ? "A" : "B", 195 + 70*i, 20);
-	for(int i = 0; i < colors; i++){
-
-	}
-}
-
-void drawIntersection(){
-	fill(0);
-	text("A ∩ B", 370, 20);
-	stroke(0);
-	fill(255, 0);
-	ellipse(370, 60, 60, 60);
-	ellipse(410, 60, 60, 60);
-}
-
-void drawUnion(){
-	fill(0);
-	text("A ∪ B", 510, 20);
-	stroke(0);
-	fill(255, 0);
-	ellipse(510, 60, 60, 60);
-	ellipse(550, 60, 60, 60);
 }
 
 // Main draw loop
 void draw(){
 	background( 255 );
-	drawSets();
-	drawSet(0);
-	drawSet(1);
-	drawIntersection();
-	drawUnion();
+	drawEdges();
+	drawNodes();
 }
 
-void mouseClicked(){
-	for(int i = 0; i < items; i++){
-		for(int j = 0; j < 2; j++){
-			int cx = 62 + 7 + 40 * j;
-			int cy = 52 + 7 + 40 * i;
-			int dx = cx - mouseX;
-			int dy = cy - mouseY;
-			if(sqrt(dx*dx + dy*dy) < 8){
-				inSet[i][j] = !inSet[i][j];
-			}
+void mousePressed() {
+	float best = 10000000;
+	int which = -1;
+	for(int i = 0; i < nodes; i++){
+		int dx = mouseX - nodePositions[i][0];
+		int dy = mouseY - nodePositions[i][1];
+		float dist = sqrt(dx*dx + dy*dy);
+		if(dist < best){
+			best = dist;
+			which = i;
 		}
 	}
+	if(best < 15){
+		aq[which]++;
+		if(aq[which] == 4) aq[which] = 1;
+	}
 }
+

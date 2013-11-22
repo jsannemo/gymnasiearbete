@@ -62,7 +62,7 @@ void mousePressed() {
 			which = i;
 		}
 	}
-	if(best < 100){
+	if(best < 10){
 		lockedFish = which;
 	} else {
 		lockedFish = -1;
@@ -153,3 +153,4 @@ void draw(){
   drawTanks();
   drawFish();
 }
+
