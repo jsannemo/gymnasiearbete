@@ -49,7 +49,7 @@ void drawSet(int i){
 	fill(0);
 	text(i == 0 ? "A" : "B", 195 + 70*i, 20);
 	for(int i = 0; i < colors; i++){
-		
+
 	}
 }
 

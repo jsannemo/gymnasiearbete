@@ -23,7 +23,7 @@
 			<section id="preword">
 				<h1>Introduktion</h1>
 				<p>
-					Detta är en interaktiv introduktion till det kombinatoriska området om grafer och färgningar av dem. Den försöker göra
+					Detta är en introduktion till det kombinatoriska området om grafer och färgningar av dem. Den försöker göra
 					svår matematik mer tillgänglig genom att använda sig av illustrationer och mer lättförståeliga förklaringar
 					än vad man hittar i forskningsartiklar och läroböcker. Den kommer långsamt bygga upp förkunskaperna som krävs för att
 					förstå och tre algoritmer som löser ett problem inom det matematiska området som kallas <em>kombinatorisk optimering</em>.
@@ -115,38 +115,84 @@
 				<p>
 					Mängden som innehåller alla element från \( A \) men inga av elementen i \( B \) kallas för <em>differensen</em> mellan mängderna och uttrycks som \( A \setminus B \). Således är
 					\( \{ ko, apa, katt \} \setminus \{ katt, hund, fisk \}  = \{ko, apa\} \).
-				<canvas id="setsDemo" data-processing-sources="sets.pde"></canvas>
+				<p>
+					Det också ett skrivsätt för antalet element i en mängd. Detta kallas också för mängdens <em>kardinalitet</em>. Kardinaliteten för en mängd \( A \) skrivs som
+					\( |A| \). Så \( |\{1, 4, 9, 16 \}| = 4 \), \( |\{a, b, c\}| = 3 \) och \( |\emptyset| = 0 \).
 				<p>
 					Om varje element i mängden \( A \) också finns i mängden \( B \) säger vi att \( A \) är en delmängd till \( B \), och skriver detta som \( A \subset B \). I vårt förra exempel är \( A \) inte en delmängd av \( B \), eftersom elementet \( ko \) finns i \( A \) men inte i \( B \). Däremot är mängden \( \{ apelsin, kiwi \} \) en delmängd till \( \{ apelsin, kiwi, banan, mango \} \).
-				<p>
-					Slutligen finns det också ett skrivsätt för antalet element i en mängd. Detta kallas också för mängdens <em>kardinalitet</em>. Kardinaliteten för en mängd \( A \) skrivs som
-					\( |A| \). Så \( |\{1, 4, 9, 16 \}| = 4 \), \( |\{a, b, c\}| = 3 \) och \( |\emptyset| = 0 \).
-			</section>
-			<section id="pie">
-				<h1>PIE: Principen om inklusion och exklusion</h1>
-				<p>
+				<img src="sets.svg" style="width: 100%; margin-top: 20px; margin-left: 20px;" />
+				<h3>Övningar</h3>
+				<ol>
+					<li>Beräkna mängden \( \{x, y\} \cup \{y, z\} \)
+					<li>Beräkna mängden \( \{1, 5, 2\} \cap \{2, 5, 6, 7\} \)
+					<li>Beräkna mängden \( \{lasagne, spaghetti\} \cap \{falukorv, pizza\} \)
+					<li>Beräkna mängden \( \{Sverige, Norge, Danmark, Finland\} \setminus \{Danmark, Tyskland\} \)
+					<li>Om två mängder \(A\) och \(B\) inte har några gemensamma element, hur många element har \(A \cup B\)?
+					<li>Om två mängder \(A\) och \(B\) inte har några gemensamma element, hur många element har \(A \cap B\)?
+					<li>Om två mängder \(A\) och \(B\) inte har några gemensamma element, hur många element har \(A \setminus B\)?
+					<li>Hur många delmängder har en mängd med \(n\) element?
+					<li>Är \( \{fanta, cola, zingo\} \) en delmängd av mängden läsksorter?
+					<li>Är \( \{a, b, c\} \subset \{a, d, e, f, c\} \)?
+				</ol>
+				<div id="sol-sets" class="panel">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a class="panel-toggle" data-parent="#sol-sets" href="#">
+								<i class="fa fa-angle-right" data-icon-hide="fa-angle-down" data-icon-show="fa-angle-right"></i>
+								&nbsp;Visa lösningar
+							</a>
+						</h4>
+					</div>
+					<div class="panel-body" id="sol-sets">
+						<ol>
+							<li>\( \{x, y, z \} \)
+							<li>\( \{2, 5\} \)
+							<li>Mängderna har inga gemensamma element, så snittet är den\ tomma mängden ( \emptyset \).
+							<li>\( \{Sverige, Norge, Finland \} \)
+							<li>Unionen består av alla element från någon av mängderna, så antalet element är summan av kardinaliteten av \( A \) plus kardinaliteten av \( B \)
+							minus kardinaliteten av \( A \cap B\), som vi ju räknade två gånger. Men \( A \cap B\) är tom, eftersom de inte har några gemensamma element. Svaret
+							blir alltså \( |A| + |B| \).
+							<li>Enligt resonemanget ovan är \( A \cap B = \emptyset \), så \( A \cap B\) har 0 element.
+							<li>Mängderna har inga gemensamma element, så vi tar inte bort någonting från \( A \). Svaret är alltså \( |A| \).
+							<li>För varje element i mängden har vi två val: antingen är den med i delmängden, eller så är den inte med i delmängden. Detta ger
+							oss två val för varje element. Så om vi har t.ex. 3 element har vi \( 2 \cdot 2 \cdot 2 = 2^3 = 8\) delmängder. Prova att skriva ner
+							alla delmängder av en liten mängd. Generellt har vi alltså \( 2^n \) delmängder om vi har en mängd med \( n \) element.
+							<li>Ja, varje element i mängden är en läsksort.
+							<li>Nej. \(b\) är i den vänstra mängden, men inte i den högra. Det är alltså ingen delmängd.
+						</ol>
+					</div>
+				</div>
+
 			</section>
 			<section id="graphs">
 				<h1>Hörn och kanter</h1>
 				<p>
 					Nu när vi har koll på mängder kan vi äntligen definera vad en <em>graf</em> är. Med graf menar vi inte grafen till en funktion, utan något helt annat.
 				<p>
-					Grafen är den struktur som vägnät, järnvägar och datornät har gemensam. I stora drag har vi en mängd saker (t.ex. korsningar, städer, eller datorer) som
+					Grafen är den struktur som vägnät, järnvägar och datornätverk har gemensam. I stora drag har vi en mängd saker (t.ex. korsningar, städer, eller datorer) som
 					på något sätt har ett samband mellan sig - i vårt fall kan olika korsningar vara sammanbundna av en väg, två städer kan ha en järnväg mellan sig, eller
-					två datorer kan vara ihopkopplade över Internet. Matematiskt beskriver vi detta samband med hjälp av två mängder som vi kallar \( V \) och \( E \).
+					två datorer kan vara ihopkopplade över Internet. Matematiskt beskriver vi dessa samband med hjälp av två mängder som vi kallar \( V \) och \( E \).
 				<p>
 					Mängden \( V \) kallas för <em>hörn</em>, och består av sakerna som har samband mellan sig. Ett visst vägnät av motorvägar skulle kunna ha hörnen
 					\( V = \{Lund, Uppsala, Helsingborg, Karlstad, Stockholm\} \).
 				<p>
-					Den andra mängden, \( E \), är den som beskriver sambanden mellan våra hörn. Varje element i den mängden är ett par av två stycken hörn. I vårt exempel
-					med motorvägar mellan städer skulle vi kunna ha en kant mellan Stockholm och Uppsala.
+					Den andra mängden, \( E \), är den som beskriver sambanden mellan våra hörn. Varje element i den mängden är ett par av två stycken hörn och kallas för grafens
+					<em>kanter</em>. I vårt exempel med motorvägar mellan städer skulle vi kunna ha en kant mellan Stockholm och Uppsala, Lund och Helsingborg, Karlstad och Stockholm,
+					samt Stockholm och Helsingborg.
+				<p>
+					Vi kan visualisera grafer på ett väldigt naturligt sätt:
+					<img src="graphs.svg" style="width: 100%; margin-top: 20px; margin-left: 20px;" />
+				<p>
+					Två hörn som har en kant mellan sig kallar vi för <em>grannar</em>.
+
 			</section>
 			<section id="coloring">
 				<h1>Att färga en graf</h1>
 				<p>
-					Så vad innebär detta mystiska graffärgningsproblem?
-				<p>
-					Vi ska nu visa tre olika sätt för att beräkna det kromatiska talet.
+					Det visar sig att problemen vi studerade i början kan formuleras rätt elegant med hjälp av grafer. I fallet med fiskarna har vi ju ett tydligt samband mellan
+					fiskarna. Antingen kan ett par av fiskar vara i samma akvarium, eller så kan de inte det. Om vi använder detta som vårt samband, och drar en kant mellan två
+					fiskar som äter upp varandra får vi följande graf:
+
 			</section>
 			<section id="chrom-bruteforce">
 				<h1>Kromatiska talet: brute force</h1>
@@ -154,6 +200,10 @@
 			</section>
 			<section id="chrom-dp">
 				<h1>Kromatiska talet: dynamisk programmering</h1>
+				<p>
+			</section>
+			<section id="pie">
+				<h1>PIE: Principen om inklusion och exklusion</h1>
 				<p>
 			</section>
 			<section id="chrom-pie">
