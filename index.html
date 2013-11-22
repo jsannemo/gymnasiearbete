@@ -3,13 +3,13 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Färgning av grafer</title>
-		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 		<script type="text/javascript" src="http://processingjs.org/js/processing.min.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 		<script type="text/javascript" src="main.js"></script>
 		<script type="text/javascript">
 			MathJax.Hub.Config({
-			"HTML-CSS": { scale: 250}
+			"HTML-CSS": { scale: 100}
 			});
 		</script>
 		<link rel="stylesheet" type="text/css" href="main.css" />
@@ -202,7 +202,7 @@
 					färger som möjligt.
 				<p>
 					Det minsta antalet färger som vi behöver för att färga en graf kallas för det <em>kromatiska talet</em>. Vi kommer beskriva tre olika metoder, <em>algoritmer</em>,
-					som räknar ut det kromatiska talet för en graf. En intressant 
+					som räknar ut det kromatiska talet för en graf. En intressant egenskap hos problemet är att det går snabbare att avgöra hur många färger som
 			</section>
 			<section id="chrom-bruteforce">
 				<h1>Kromatiska talet: brute force</h1>
@@ -214,6 +214,10 @@
 			</section>
 			<section id="pie">
 				<h1>PIE: Principen om inklusion och exklusion</h1>
+				<p>
+			</section>
+			<section id="zeta">
+				<h1>Zeta-transformationen och Yates algoritm</h1>
 				<p>
 			</section>
 			<section id="chrom-pie">

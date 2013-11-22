@@ -1,6 +1,7 @@
 void setup(){
   size(800, 300);
   frameRate(60);
+  smooth();
 }
 
 int nodes = 6;
