@@ -50,10 +50,12 @@ void drawNodes(){
 }
 
 void drawEdges(){
+	boolean bad = false;
 	for(int i = 0; i < nodes; i++)
 		for(int j = 0; j < i; j++){
 			if(matrix[i][j]){
 				if(aq[i] == aq[j]){
+					bad = true;
 					stroke(#FF122E);
 				} else {
 					stroke(0);
@@ -61,6 +63,10 @@ void drawEdges(){
 				line(nodePositions[i][0], nodePositions[i][1], nodePositions[j][0], nodePositions[j][1]);
 			}
 		}
+	if(!bad){
+		stroke(0);
+		text("Du klarade det!", 100, 100);
+	}
 }
 
 // Main draw loop

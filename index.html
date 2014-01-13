@@ -105,9 +105,9 @@
 					\( \{ \)Danmark, Finland, Island, Norge, Sverige\( \} \). Vi kan också blanda elementen i olika mängder. \( \{ a, b, 1, 2, \) Sverige\( \} \)
 					är också en mängd.
 				<p>
-					Om vi har fler mängder än en \(A\) och \(B\) är vi också intresserade av hur de förhåller sig till varandra. Vi kanske skulle vilja titta på mängden som vi får om vi slår ihop mängderna.
+					Om vi har fler mängder än en, t.ex. de två mängderna \(A\) och \(B\), är vi också intresserade av hur de förhåller sig till varandra. Vi kanske skulle vilja titta på mängden som vi får om vi slår ihop mängderna.
 					Denna nya mängden kallas för <em>unionen</em> av mängderna och har beteckningen \( A \cup B \). Unionen av de två mängderna \( A = \{ ko, apa, katt \} \) och
-					\( B = \{ katt, hund, fisk \} \) blir alltså \( A \cup B = \{ko, apa, katt, hund, fisk \} \).
+					\( B = \{ katt, hund, fisk \} \) blir alltså \( A \cup B = \{ko, apa, katt, hund, fisk \} \). Notera att vi inte behöver skriver \( katt \) två gånger bara för att elementet var i båda mängder.
 				<p>
 					Motsvarande kan vi beräkna mängden som består av alla element som finns i <em>båda</em> mängderna. Detta kallas istället för mängdernas <em>snitt</em> och skrivs som
 					\( A \cap B \). Snittet av samma två mängder \( A = \{ ko, apa, katt \} \) och
@@ -119,7 +119,7 @@
 					Det också ett skrivsätt för antalet element i en mängd. Detta kallas också för mängdens <em>kardinalitet</em>. Kardinaliteten för en mängd \( A \) skrivs som
 					\( |A| \). Så \( |\{1, 4, 9, 16 \}| = 4 \), \( |\{a, b, c\}| = 3 \) och \( |\emptyset| = 0 \).
 				<p>
-					Om varje element i mängden \( A \) också finns i mängden \( B \) säger vi att \( A \) är en delmängd till \( B \), och skriver detta som \( A \subset B \). I vårt förra exempel är \( A \) inte en delmängd av \( B \), eftersom elementet \( ko \) finns i \( A \) men inte i \( B \). Däremot är mängden \( \{ apelsin, kiwi \} \) en delmängd till \( \{ apelsin, kiwi, banan, mango \} \).
+					Om varje element i mängden \( A \) också finns i mängden \( B \) säger vi att \( A \) är en delmängd till \( B \), och skriver detta som \( A \subseteq B \). I vårt förra exempel är \( A \) inte en delmängd av \( B \), eftersom elementet \( ko \) finns i \( A \) men inte i \( B \). Däremot är mängden \( \{ apelsin, kiwi \} \) en delmängd till \( \{ apelsin, kiwi, banan, mango \} \).
 				<img src="sets.svg" style="width: 100%; margin-top: 20px; margin-left: 20px;" />
 				<h3>Övningar</h3>
 				<ol>
@@ -132,7 +132,7 @@
 					<li>Om två mängder \(A\) och \(B\) inte har några gemensamma element, hur många element har \(A \setminus B\)?
 					<li>Hur många delmängder har en mängd med \(n\) element?
 					<li>Är \( \{fanta, cola, zingo\} \) en delmängd av mängden läsksorter?
-					<li>Är \( \{a, b, c\} \subset \{a, d, e, f, c\} \)?
+					<li>Är \( \{a, b, c\} \subseteq \{a, d, e, f, c\} \)?
 				</ol>
 				<div id="sol-sets" class="panel">
 					<div class="panel-heading">
@@ -184,6 +184,29 @@
 					<img src="graphs.svg" style="width: 100%; margin-top: 20px; margin-left: 20px;" />
 				<p>
 					Två hörn som har en kant mellan sig kallar vi för <em>grannar</em>.
+				<h3>Övningar</h3>
+				<ol>
+					<li>Rita en graf med dig själv och några av dina vänner som hörn. dra kanter mellan två personer om de är vänner.
+					<li>Rita den graf som har \( v = \{a, b, c, d\} \) och \( e = \{(a, b), (c, b), (d, a), (b, c)\}\).
+					<li>Hur många olika kanter kan en graf med \( n \) hörn ha?
+					<li>Rita en graf över fiskarna i problemet om akvarier. Dra en kant mellan två fiskar om de skulle äta upp varandra.
+				</ol>
+				<div id="sol-graphs" class="panel">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a class="panel-toggle" data-parent="#sol-graphs" href="#">
+								<i class="fa fa-angle-right" data-icon-hide="fa-angle-down" data-icon-show="fa-angle-right"></i>
+								&nbsp;Visa lösningar
+							</a>
+						</h4>
+					</div>
+					<div class="panel-body" id="sol-sets">
+						<ol>
+							<li value=3>Det finns \( \frac{n(n-1)}{2} \) olika par av noder, och vi kan ha en kant mellan varje.
+							<li>Se nästa del.
+						</ol>
+					</div>
+	
 
 			</section>
 			<section id="coloring">
@@ -198,15 +221,91 @@
 					nummer indikerar vilket akvarium en viss fisk ska placeras i. Att inga grannar har samma nummer betyder att inget par av fiskar vill äta varandra. Om du klickar
 					på ett hörn ändras dess nummer. Ändra numrena så att inga grannar har samma nummer.
 				<p>
-					Vi kallar numrena som vi ger till varje hörn för <em>färger</em>. Graffärgningsproblemet går ut på hitta en giltig färgning av en graf som använder så få
-					färger som möjligt.
+					Vi kallar numrena som vi ger till varje hörn för <em>färger</em> (detta är alltså inte färgerna som vi ritat på hörnen). Graffärgningsproblemet går ut på hitta en giltig färgning av en graf som använder så få
+					färger som möjligt. En giltig färgning är alltså en färgning där inga grannar har samma nummer.
 				<p>
 					Det minsta antalet färger som vi behöver för att färga en graf kallas för det <em>kromatiska talet</em>. Vi kommer beskriva tre olika metoder, <em>algoritmer</em>,
-					som räknar ut det kromatiska talet för en graf. En intressant egenskap hos problemet är att det går snabbare att avgöra hur många färger som
+					som räknar ut det kromatiska talet för en graf. En intressant egenskap hos problemet är att det går snabbare att avgöra hur många färger som behövs för att färga en graf än att faktiskt hitta denna färgning.
+
+				<h3>Övningar</h3>
+				<ol>
+					<li>Förklara varför graffärgningsproblemet är samma problem som fiskproblemet, men att vi inte alltid kan lösa graffärgningsproblemet på samma sätt som schemaläggningsproblemet (tips: vad för extra krav har schemaläggningsproblemet?)
+					<li>Bevisa att det kromatiska talet för fiskgrafen faktiskt är 3 - det vill säga, att vi inte kan färga fiskgrafen med 2 färger.
+					<li>Vad är det kromatiska talet för grafen som har alla möjliga kanter?
+					<li>Vad är det kromatiska talet för grafen som har alla möjliga kanter utom exakt 1?
+				</ol>
+				<div id="sol-coloring" class="panel">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a class="panel-toggle" data-parent="#sol-coloring" href="#">
+								<i class="fa fa-angle-right" data-icon-hide="fa-angle-down" data-icon-show="fa-angle-right"></i>
+								&nbsp;Visa lösningar
+							</a>
+						</h4>
+					</div>
+					<div class="panel-body" id="sol-coloring">
+						<ol>
+							<li>I schemaläggningssystemet måste grafen vara på ett speciellt sätt - det måste vara en så kallad <em>intervallgraf</em> - grafen man får av att rita kanter mellan två intervall som har minst en gemensam punkt. Alla grafer kan inte se ut på detta sätt - betrakta exempelvis grafen \( V = \{A, B, C, D\} \) och \( E = \{(A,B), (B,C), (C,D), (D,A)\}\) (en kvadrat med hörnen som kanter). 
+							<li>Det finns i grafen flera tripler av hörn, så att varje hörn i triplen har en kant mellan sig (kallad en triangel). Om vi bara hade två färger skulle minst två av dessa hörn ha samma färg, men de är ju grannar. Alltså måste varje färgning med två färger vara ogiltig.
+							<li>Eftersom varje hörn är granne till varje annat hörn måste varje hörn ha sin egen färg. Svaret är alltså: lika många som antalet hörn.
+							<li>Här kan vi ge de två hörn som inte är grannar samma färg. För de övriga hörnen gäller dock av samma anledning som ovan att de måste ha olika färger. Svaret är alltså: lika många som antalet hörn, minus 1 (om vi har minst 2 hörn).
+						</ol>
+					</div>
 			</section>
 			<section id="chrom-bruteforce">
 				<h1>Kromatiska talet: brute force</h1>
 				<p>
+					En <em>algoritm</em> är en metod för att lösa ett problem. Algoritmen tar emot ett exempel på ett problem och producerar sedan ett svar.
+					Vi kommer beskriva tre olika algoritmer för att lösa graffärningsproblemet som vi definerade i föregående del. Efter att vi definerat algoritmen
+					samt bevisat att den är korrekt kommer vi analysera den och försöka ta reda på hur effektiv den är. Med effektivitet undrar vi hur mycket tid
+					algoritmen kräver relativt problemets storlek (i vårt fall, antalet hörn i grafen), samt hur mycket minne den kräver. Även om algoritmer oftast
+					körs på datorer idag använder du antagligen själv algoritmer ofta - du har nog lärt dig multiplikationsalgoritmen, som tar två tal och ger oss
+					talens produkt. Om vi skulle analysera en sådan algoritm skulle vi t.ex. kunna mäta tiden i hur många steg du utförde för att multiplicer talen, och
+					hur mycket minne den kräver som hur många siffror du behövde skriva ner.
+				<p>
+					Den första algoritmen använder sig av en teknik som kallas för <em>brute force</em>. Den går helt enkelt ut på att vi provar alla färgningar som finns
+					och ser om de är korrekta eller inte. Vi kan skriva ner metoden lite mer formellt på följande vis:
+
+<pre>
+Algoritm: beräkna det kromatiska talet med bruteforce
+
+KromatiskaTalet := oändligheten
+För varje möjlig färgning F {
+	Om F är en giltig färgning {
+		KromatiskaTalet := antalet färger i F
+	}
+}
+Svara KromatiskaTalet
+</pre>
+			<p>
+			Vi använder här \( x := y \) i meningen "låt \( x \) få värdet \( y \)". Vi kallar \( x \) för en <em>variabel</em>, som i matematiken. Men i algoritmer kan vi ändra variabelns värde medan vi utför algoritmen.
+			<p>
+
+					Att algoritmen är korrekt är tämligen uppenbart - vi kommer aldrig ge ett svar som är för litet, ty vi bara betraktar antalet färger hos de giltiga färgningarna. Vi kommer heller aldrig ge ett svar som är för stort. Antag nämligen att det finns en bättre färgning än den vi hittade. Men vår algoritm går ju igenom alla färgningar som var möjliga, alltså måste vi gått igenom även denna bättre färgning. Vi får alltså en motsägelse, och antaganet att det finns en bättre färgning än den vi hittade är felaktig.
+
+			<p>
+				Det fattas dock en viktig del av vår algoritm: vi använder oss av handlingarna "För varje möjlig färgning" och "Om F är en giltig färgning" - men vi har ju faktiskt inte specifierat metoden som vi använder för att göra detta! Så vi gör det nu.
+<pre>
+Algoritm: generera alla möjliga färgningar
+F_i: Färgen på hörn nummer i
+
+Generera (h) {
+	Om h == |V| + 1 {
+		Vi har hittat en färgning (F_1, F_2, ..., F_|V|)!	
+	} Annars {
+		För varje färg i = 1 till |V| {
+			F_h := i
+			Rekursera(i + 1)
+		}
+	}
+}
+
+Generera(1)
+</pre>
+
+<p>Vi införde här konceptet av en <em>funktion</em> i form av \( Generera \). En funktion skiljer sig inte så mycket från en algoritm - den tar variabler 
+och producerar sedan ett svar. 
+				
 			</section>
 			<section id="chrom-dp">
 				<h1>Kromatiska talet: dynamisk programmering</h1>
