@@ -1,6 +1,7 @@
 \documentclass[a4paper]{report}
 
 \usepackage[swedish]{babel}
+\usepackage{minted}
 \usepackage{capt-of}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
@@ -71,22 +72,19 @@ Problemet som vi kommer inrikta oss på är att beräkna det minsta antalet fär
 
 \section{Syfte och frågeställning}
 Problemet är ett viktigt problem inom grafteorin och datavetenskapen. Att hitta en effektiv algoritm (som tar polynomisk tid) till problemet skulle vara en banbrytande upptäckt inom den teoretiska datalogin, då problemet är ett av många så kallade NP-kompletta problem - en klass av viktiga problem som vi inte har effektiva lösningar till än. En effektiv lösning till
-ett av dessa NP-kompletta problem skulle ge en effektiv lösning till alla NP-kompletta problem, samt avgöra frågan om $P = NP$ ($P$ och $NP$ är två klasser av problem som vi inte vet om de är lika eller olika än). Detta är ett av de sju berömda så kallade \emph{millenieproblemen} listade av Clay Mathematical Institute  med en prissumma på en miljon amerikanska dollar för lösningen till vardera problem.
+ett av dessa NP-kompletta problem skulle ge en effektiv lösning till alla NP-kompletta problem, samt avgöra frågan om $P = NP$ ($P$ och $NP$ är viktiga två klasser av problem som vi inte vet om de är lika eller olika än). Detta är ett av de sju berömda så kallade \emph{millenieproblemen} listade av Clay Mathematical Institute  med en prissumma på en miljon amerikanska dollar för lösningen till vardera problem.
 
 I arbetet har vi ställt oss frågorna:
 \begin{itemize}
-\item Vilka tillämpningar har graffärgningsproblemet?
 \item Hur snabbt kan vi beräkna det kromatiska talet?
-\item Hur jämför sig algoriterma med varandra i faktiskt körtid?
-\item Kan de här algoritmerna och teknikerna förklaras på ett enkelt sätt på ett språk som en gymnasielev kan förstå?
+\item Vilka olika algoritmer finns det för att beräkna det kromatisla talet?
+\item Hur jämför sig algoriterma med varandra i teoretisk och faktiskt körtid?
 \end{itemize}
 
 \section{Avgränsningar}
 Det finns många varianter och generaliseringar av det kromatiska talet, men vi har i arbetet riktat in oss på det traditionella problemet.
 
 \section{Teori}
-
-Arbetet bygger på mycket bakomliggande matematisk teori. En mer lättförståelig och populärvetenskaplig beskrivning av den större delen av teorin hittar du i bilaga C (eller på hemsidan \url{http://jsannemo.github.io/projarbete/}, inklusive de interaktiva exemplena).
 
 \subsection{Grunderna i grafteori}
 
@@ -101,13 +99,13 @@ Denna väldigt matematiska formulering beskrivs enklare av en bild. Grafen $V = 
 
 Här representeras de fyra hörnen av fyra olika cirklar, och kanterna som streck mellan de två hörn som utgör kanten.
 
-Om en kant $(u, v) \in E$ kallar vi noderna $u$ och $v$ för \emph{grannar}. En mängd hörn $V' \subseteq V$ kallas för \emph{oberoende} om inget par av hörn i $V'$ är grannar. I figur~\ref{fig:independent_set} har hörnen i en oberoende mängd
+Om en kant $(u, v) \in E$ kallar vi hörnen $u$ och $v$ för \emph{grannar}. En mängd hörn $V' \subseteq V$ kallas för \emph{oberoende} om inget par av hörn i $V'$ är grannar. I figur~\ref{fig:independent_set} har hörnen i en oberoende mängd
 markerats med rött.
 
 \begin{center}
     \centering
     \includegraphics{oberoende_graf.png}
-    \captionof{figure}{De rödfärgade noderna i grafen bildar en oberoende mängd.}
+    \captionof{figure}{De rödfärgade hörnen i grafen bildar en oberoende mängd.}
 \label{fig:independent_set}
 \end{center}
 
@@ -146,7 +144,7 @@ Principen om inklusion/exklusion har många formuleringar. Den vi kommer att anv
 \begin{proof}
     Om något element $x \in U$ inte är i någon av mängderna $S_i$ kommer den räknas exakt en gång, nämligen då $I = \emptyset$.
 
-    Antag att $x \in S_i$ exakt för de $i \in I \not= \emptyset$. $x$ kommer då räknas med 
+    Antag att $x \in S_i$ exakt för de $i \in I \not= \emptyset$. $x$ kommer då räknas med
 
     $$\sum_{X \subseteq I}{(-1)^{|X|}} = \sum_{i=0}^{|I|}{{|I| \choose i}\cdot(-1)^i} = (1-1)^{|I|} = 0$$
 
@@ -166,7 +164,7 @@ inte växer snabbare än $f(n)$. Vi kommer oftast använda denna asypmtotiska no
 
 \subsection{Kromatiska talet}
 
-Givet en enkel graf $G = (V, E)$ vill vi bestämma det minsta antalet färger som krävs för färga grafen, dvs det minsta $k$ sådan att $G$ är $k$-färgbar.
+Givet en graf $G = (V, E)$ vill vi bestämma det minsta antalet färger som krävs för att färga grafen, dvs det minsta $k$ sådan att $G$ är $k$-färgbar.
 
 Det minsta antalet färger som behövs för att färga en graf $G$ kallar vi det \emph{kromatiska talet} och betecknar det med $\chi(G)$. Det kromatiska talet för Petersens graf som vi såg ett exempel på är 3, vilket vi uppnår med färgningen i figur~\ref{fig:petersen_coloring}
 
@@ -201,7 +199,7 @@ Eftersom ett hörn som mest kan ha alla övriga hörn som grannar följer även
 \subsection{Bruteforce}
 Den första (och enklaste) algoritmen för att beräkna det kromatiska talet går ut på att prova alla möjliga färgningar. Notera att det finns $|V|^k$ möjliga färgningar av en graf med högst $k$ färger. Vi kan rekursivt generera alla dessa färgningar och sedan kontrollera om färgningen är giltig eller inte. Det kromatiska talet är då minimum av antalet färger hos de giltiga färgningarna. Att kontrollera om en färgning är giltig kan vi göra i $O(|E|)$ tid genom att för varje par av grannar se om de har samma färg. Detta ger oss en algoritm som går i tid $O(|E||V|^k)$ för att avgöra $k$-färgbarhet och $O(|E||V|^{d})$ för att bestämma det kromatiska talet.
 
-Vi behöver bara testa alla $k$ upp till $d$, ty om $k > d$ är $k = d + 1$. 
+Vi behöver bara testa alla $k$ upp till $d$, ty om $k > d$ är $k = d + 1$.
 
 En alternativ algoritm för att beräkna $\chi(G)$ är att binärsöka över $k$ och testa om grafen är $k$-färgbar. I det värsta fallet, då $\chi(G) \ge d$ kommer detta vara långsammare.
 Annars kommer algoritmen att testa högst $lg (d)$ värden på $k$, alla högst $d-1$. Men $|V|^{d} \ge |V|^{d-1}\cdot{\lg(d)}$, dvs för alla möjliga värden på
@@ -249,7 +247,7 @@ Vi kan göra en liten förbättring av algoritmen. Observera att två färgninga
 Denna modifikation kräver i princip endast en ändring av ``för alla $c$ mellan 1 till $\min(k, \max(A_i) + 1)$'' i proceduren som genererar färgningarna (se Knuth~\cite{Knuth4a:1997}).
 
 \subsection{Backtracking med pruning}
-I den föregående algoritmen spenderar vi mycket tid på ogiltiga färgningar. Ett bättre alternativ är \emph{backtracking med pruning}. När vi bygger upp färgningarna rekursivt kan vi ofta avgöra om färgningen är ogiltig tidigare än sista hörnet (vilket är vad vi gör i den vanliga bruteforce-algoritmen). 
+I den föregående algoritmen spenderar vi mycket tid på ogiltiga färgningar. Ett bättre alternativ är \emph{backtracking med pruning}. När vi bygger upp färgningarna rekursivt kan vi ofta avgöra om färgningen är ogiltig tidigare än sista hörnet (vilket är vad vi gör i den vanliga bruteforce-algoritmen).
 Genom att kontrollera detta när vi tilldelar varje hörn sin färg kommer vi få en drastisk förbättring av körtiden. Att analysera körtiden för en sådan algoritm är generellt mycket svårt, även i slumpmässiga grafer.
 
 \subsection{Dynamisk programmering}
@@ -264,7 +262,7 @@ med
 
 basfallet att $\chi(G) = 0$ om $G$ är den tomma grafen.
 
-Här betyder $G[S]$ den graf som fås genom att ta mängden hörn $S$ och alla kanter som har båda ändpunkter i $S$ (kallad för den \emph{inducerade subgrafen} av $S$.
+Här betyder $G[S]$ den graf som fås genom att ta mängden hörn $S$ och alla kanter som har båda ändpunkter i $S$ (kallad för den \emph{inducerade subgrafen} av $S$).
 
 Det finns högst $2^n$ delmängder (och därmed oberoende delmängder) av en graf med $n$ hörn. Om vi bygger upp en tabell över alla delresultat
 i rekurrensen får vi tidskomplexiteten
@@ -279,15 +277,70 @@ Med denna ändring tar algoritmen istället tid (vi har låtit $MI(G)$ vara män
 
 $$O(\sum_{S \subseteq V}{|MI(G[S])|}) = O(\sum^n_{k=0}{{n \choose k}3^{k/3}}) = O((1 + 3^{1/3})^n) =  O(2.443^n)$$
 
-En klar förbättring jämfört med att testa alla möjliga oberoende mängder.
+En klar förbättring jämfört med att testa alla möjliga oberoende mängder. Denna förbättring implementerades dock inte, då algoritmen som listar alla maximala
+oberoende mängder i $O(3{n/3})$ tid dels är komplicerad, och dels har dålig prestanda i de flesta slumpmässiga fall (de grafer där antalet maximala oberoende mängder
+är stort är specialfall som generellt inte uppkommer i de slumpmässiga fallen).
 
 \subsection{Inklusion/exklusion}
 
 Det hittils bästa resultatet kommer av Björklund, Husfeldt och Koivisto~\cite{Bjorklund:2009}. De formulerade en formel till antalet lösningar på olika partitioneringsproblem av mängder baserat på inklusion/exklusion. Graffärgning kan som vi såg i föregående algoritm formuleras på det viset - vi vill partitionera mängden hörn i en graf i ett antal oberoende mängder.
 
-\chapter{Metod}
-\todo{Hur gjordes jämförelserna av algoritmerna; dator, operativsystem, kompilator}
-\todo{Hur konstruerades testgraferna}
+Betrakta en mängd $N$ och en familj av delmängder $\mathcal{F}$. En $k$-\emph{täckning} av $N$ är en $k$-tuppel av delmängder $A_1, ..., A_k$ ur $\mathcal{F}$ så att $A_1 \cup ... \cup A_k = N$.
+
+Låt nu $a(X)$ vara antalet mängder i $\mathcal{F}$ som inte har något element gemensamt med mängden $X$.
+
+Då är antalet $k$-täckningar av $N$ lika med:
+
+$$c_k(\mathcal{F}) = \sum_{X\subseteq N}{(-1)^{|X|}a(X)^k}$$
+
+Vi har här använt oss utav inklusion/exklusions-formeln. Universumet är här mängden av alla $k$-tuppler av delmängderna ur $\mathcal{F}$, och mängderna $S_i$ i formeln är de $k$-tuppler
+där ingen utav delmängderna innehåller elementet $i$, dvs $S_i = \{(A_1, ..., A_k) | i \not\in A_1 \cup ... \cup A_k)\}$.
+
+Enligt inklusions/exklusions-formeln beräknar detta antalet $k$-tuppler som innehåller alla element. Vi har här använt oss av det faktum att $|\bigcap_{i\in I} S_i| = a(I)^k$. Vänsterledet räknar antalet $k$-tuppler som inte inkluderar något av elementen i $I$. Högerleder beräknar antalet oberoende mängder som inte
+inkluderar något element i $I$ och sedan upphöjer det till $k$ vilket ger antalet $k$-tuppler som uppfyller det villkoret.
+
+Om vi låter familjen $\mathcal{F}$ vara alla  oberoende mängder beräknar vi antalet färgningar med $k$ färger. Om detta tal är större än 0 är grafen $k$-färgbar. Vi kan
+nu binärsöka över $k$ för att bestämma grafens kromatiska tal.
+
+Det återstår att beräkna $a(X)$ (antalet oberoende mängder som inte inkluderar något element i $X$).
+
+Vi visar att $a(X)$ uppfyller rekurrensen $a(X) = a(X \cup \{v\}) + a(X \cup N(v) \cup v) + 1$ där $v \not\in X$.
+
+Betrakta alla oberoende mängder som inte inkluderar något element i $X$. Om mängden inte innehåller $v$ räknas den i $a(X \cup \{v\})$. Annars är mängden endast $v$ (och räknas i $+1$)
+eller så består mängden av $v$ och andra element. Då räknas mängden i $a(X \cup N(v) \cup v)$ (där $N(v)$ är alla hörn som är grannar till $v$), eftersom vi då inte får inkludera
+några hörn som är grannar till $v$.
+
+Att evaluera inklusion/exklusions-formeln tar $O(2^n)$ tid. Att beräkna $a(X)^k$ för alla $2^{|V|}$  värden på $X$ tar $O(2^n \cdot \lg k$) tid. Vi kan behöva
+göra detta för $lg |V|$ olika värden på $k$ eftersom vi binärsöker över $k$. Totalt blir tidskomplexiteten $O(2^|V| \lg^2 n)$.
+
+\chapter{Körning av programmen}
+Algoritmerna implementerades i programmeringsspråket C++. De kompilerades med GCC g++ version 4.6.3 och testades på en Linux-server på KTH (kernelversion 3.2.0).
+
+De kompilerades med kommandot
+\begin{minted}{bash}
+    g++ -Ofast -static program.cpp
+\end{minted}
+
+och kördes sedan med
+
+\begin{minted}{bash}
+    time ./a.out < test.in
+\end{minted}
+
+för att mäta tiden som programmet tog. Alla algoritmer använde samma indata-rutin.
+
+Om en algoritm tog mer än 15 minuter för att lösa en viss graf avbröts programmet.
+
+\chapter{Testgraferna}
+Graferna (myciel3.in, myciel4.in) hämtades från denna sida: \url{http://mat.gsia.cmu.edu/COLOR/instances.html}.
+
+Petersens graf fanns som grafen petersen.in.
+
+Olika slumpmässiga grafer generades med olika sannolikheter (varje kant antingen fanns eller inte fanns med sannolikhet $p$, oberoende av varandra).
+
+För olika antal hörn $n$ och en sannolikhet $p$ genererades tre olika grafer (random-n-p-k.in).
+
+Att generera grafer som är svåra att färga är ett svårt problem, så vi har nöjt oss att testa slumpmässiga grafer med olika densitet för kanterna.
 
 \chapter{Resultat}
 \todo{Körtider för algoritmerna när implementationen är klar}
@@ -297,12 +350,5 @@ Det hittils bästa resultatet kommer av Björklund, Husfeldt och Koivisto~\cite{
 \nocite{VanLint:2006}
 \bibliographystyle{plain}
 \bibliography{referenser}{}
-
-\section*{Bilaga A: Implementationer av algoritmerna i C++}
-\todo{Implementera algoritmerna i C++}
-\section*{Bilaga B: Testgrafer}
-\section*{Bilaga C: Populärvetenskaplig uppsats om graffärgning}
-
-
 
 \end{document}
