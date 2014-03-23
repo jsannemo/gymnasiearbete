@@ -313,6 +313,9 @@ några hörn som är grannar till $v$.
 Att evaluera inklusion/exklusions-formeln tar $O(2^n)$ tid. Att beräkna $a(X)^k$ för alla $2^{|V|}$  värden på $X$ tar $O(2^n \cdot \lg k$) tid. Vi kan behöva
 göra detta för $lg |V|$ olika värden på $k$ eftersom vi binärsöker över $k$. Totalt blir tidskomplexiteten $O(2^|V| \lg^2 n)$.
 
+Värdena på $a(X)^k$ är dock så pass stora att de inte ryms i ett 64-bitars heltal. Algoritmen kräver alltså stora heltal, vilket kräver ytterligare operationer för
+multiplikation ($lg^2 2^n = O(n^2)$). Totalt tar algoritmen alltså $O(2^|V| \lg^2 n \cdot n^2)$ tid. Biblioteket GMP användes för stora tal.
+
 \chapter{Körning av programmen}
 Algoritmerna implementerades i programmeringsspråket C++. De kompilerades med GCC g++ version 4.6.3 och testades på en Linux-server på KTH (kernelversion 3.2.0).
 
@@ -329,7 +332,7 @@ och kördes sedan med
 
 för att mäta tiden som programmet tog. Alla algoritmer använde samma indata-rutin.
 
-Om en algoritm tog mer än 15 minuter för att lösa en viss graf avbröts programmet.
+Om en algoritm tog mer än 10 minuter för att lösa en viss graf avbröts programmet.
 
 \chapter{Testgraferna}
 Graferna (myciel3.in, myciel4.in) hämtades från denna sida: \url{http://mat.gsia.cmu.edu/COLOR/instances.html}.
