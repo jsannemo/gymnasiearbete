@@ -16,17 +16,18 @@ BitSet mask;
 
 int getA(BitSet x){
     if(a[x] != -1) return a[x];
-    int ans = 0;
-    BitSet ffs = 1 << __builtin_ctz(x^mask);
+    int ans = 1;
+    int which = __builtin_ctz(x^mask);
+    BitSet ffs = 1 << which;
     ans += getA(x | ffs); // don't include ffs
-    ans += getA(x | adj[ffs]); // include ffs
+    ans += getA(x | adj[which]); // include ffs
     return a[x] = ans;
 }
 
 void calculateA(Instance &inst){
     mask = (1u << inst.vertices) - 1u;
-    adj.resize(1u << inst.vertices, -1);
-    adj[mask] = 0;
+    a.resize(1u << inst.vertices, -1);
+    a[mask] = 0;
     for(size_t i = 0; i <= mask; ++i) getA(i);
 }
 
@@ -48,7 +49,13 @@ bool color(Instance &inst, int mid){
 }
 
 int chromaticNumber(Instance &inst){
-    a.resize(1u << inst.vertices);
+    adj.resize(inst.vertices);
+    for(int i = 0; i < inst.vertices; ++i){
+        adj[i] |= 1u << i;
+        for(int j = 0; j < int(inst.adj[i].size()); ++j){
+            adj[i] |= 1u << inst.adj[i][j];
+        }
+    }
     calculateA(inst);
     int d = 0;
     for(int i = 0; i < inst.vertices; ++i)

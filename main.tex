@@ -66,18 +66,18 @@ for the computation of the chromatic number and compare their theoretical and pr
 
 \chapter{Inledning}
 \section{Bakgrund}
-Graffärgningsproblemet går ut på att färga hörnen i en graf med ett så litet antal färger som möjligt, på ett sådant sätt att två hörn som är grannar har olika färg. Detta så lättformulerade problem visade sig ha många tillämpningar inom olika områden så som kompilatorkonstruktion, resursallokering och till och med lösning av sudoku-pussel. Än så länge har man inte kommit på en ``effektiv'' algoritm för att lösa problemet exakt, och att bestämma antalet färger som krävs för att färga en graf var ett av Karps ursprungliga NP-kompletta problem. Graffärgning är fortfarande ett aktivt fält inom forskningen, med många generalisering och förenklande specialfall som utforskas.
+Graffärgningsproblemet går ut på att färga hörnen i en graf med ett så litet antal färger som möjligt, på ett sådant sätt att två hörn som är grannar har olika färg. Detta så lättformulerade problem visade sig ha många tillämpningar inom olika områden så som kompilatorkonstruktion, resursallokering och till och med lösning av sudoku-pussel. Än så länge har man inte kommit på en ``effektiv'' algoritm för att lösa problemet exakt, och att bestämma antalet färger som krävs för att färga en graf var ett av Karps ursprungliga NP-kompletta problem. Graffärgning är fortfarande ett aktivt fält inom forskningen, med många generaliseringar och förenklande specialfall som utforskas.
 
-Problemet som vi kommer inrikta oss på är att beräkna det minsta antalet färger som behövs för att färga en graf, det så kallad \emph{kromatiska talet}.
+Problemet som vi kommer inrikta oss på är att beräkna det minsta antalet färger som behövs för att färga en graf, det så kallade \emph{kromatiska talet}.
 
 \section{Syfte och frågeställning}
-Problemet är ett viktigt problem inom grafteorin och datavetenskapen. Att hitta en effektiv algoritm (som tar polynomisk tid) till problemet skulle vara en banbrytande upptäckt inom den teoretiska datalogin, då problemet är ett av många så kallade NP-kompletta problem - en klass av viktiga problem som vi inte har effektiva lösningar till än. En effektiv lösning till
+Problemet är viktigt inom grafteorin och datavetenskapen. Att hitta en effektiv algoritm (som tar polynomisk tid) till problemet skulle vara en banbrytande upptäckt inom den teoretiska datalogin, då problemet är ett av många så kallade NP-kompletta problem - en klass av viktiga problem som vi inte har effektiva lösningar till än. En effektiv lösning till
 ett av dessa NP-kompletta problem skulle ge en effektiv lösning till alla NP-kompletta problem, samt avgöra frågan om $P = NP$ ($P$ och $NP$ är viktiga två klasser av problem som vi inte vet om de är lika eller olika än). Detta är ett av de sju berömda så kallade \emph{millenieproblemen} listade av Clay Mathematical Institute  med en prissumma på en miljon amerikanska dollar för lösningen till vardera problem.
 
 I arbetet har vi ställt oss frågorna:
 \begin{itemize}
 \item Hur snabbt kan vi beräkna det kromatiska talet?
-\item Vilka olika algoritmer finns det för att beräkna det kromatisla talet?
+\item Vilka olika algoritmer finns det för att beräkna det kromatiska talet?
 \item Hur jämför sig algoriterma med varandra i teoretisk och faktiskt körtid?
 \end{itemize}
 
@@ -99,17 +99,16 @@ Denna väldigt matematiska formulering beskrivs enklare av en bild. Grafen $V = 
 
 Här representeras de fyra hörnen av fyra olika cirklar, och kanterna som streck mellan de två hörn som utgör kanten.
 
-Om en kant $(u, v) \in E$ kallar vi hörnen $u$ och $v$ för \emph{grannar}. En mängd hörn $V' \subseteq V$ kallas för \emph{oberoende} om inget par av hörn i $V'$ är grannar. I figur~\ref{fig:independent_set} har hörnen i en oberoende mängd
-markerats med rött.
+Om en kant $(u, v) \in E$ kallar vi hörnen $u$ och $v$ för \emph{grannar}. En mängd hörn $V' \subseteq V$ kallas för \emph{oberoende} om inget par av hörn i $V'$ är grannar. I figur~\ref{fig:independent_set} utgör de ljusgrå hörnen en oberoende mängd.
 
 \begin{center}
     \centering
     \includegraphics{oberoende_graf.png}
-    \captionof{figure}{De rödfärgade hörnen i grafen bildar en oberoende mängd.}
+    \captionof{figure}{De ljusa hörnen i grafen bilder en oberoende mängd}
 \label{fig:independent_set}
 \end{center}
 
-En partition av $V$ i $k$ oberoende mängder kallas för en $k$-\emph{färgning}. Vi kan också formulera det som att varje hörn är färgad
+En partition av $V$ i $k$ oberoende mängder kallas för en $k$-\emph{färgning}. Vi kan också formulera det som att varje hörn är färgat
 med en utav $k$ färger (t.ex. färgerna $\{1, 2, ..., k\}$) så att inga två grannar har samma färg.
 
 \begin{figure}[h!]
@@ -144,7 +143,7 @@ Principen om inklusion/exklusion har många formuleringar. Den vi kommer att anv
 \begin{proof}
     Om något element $x \in U$ inte är i någon av mängderna $S_i$ kommer den räknas exakt en gång, nämligen då $I = \emptyset$.
 
-    Antag att $x \in S_i$ exakt för de $i \in I \not= \emptyset$. $x$ kommer då räknas med
+    Antag att $x \in S_i$ exakt för de $i \in I$ där $I \not= \emptyset$. $x$ kommer då räknas med
 
     $$\sum_{X \subseteq I}{(-1)^{|X|}} = \sum_{i=0}^{|I|}{{|I| \choose i}\cdot(-1)^i} = (1-1)^{|I|} = 0$$
 
@@ -157,7 +156,7 @@ Principen om inklusion/exklusion har många formuleringar. Den vi kommer att anv
 När vi analyserar prestandan av våra algoritmer vill vi kunna uttrycka hur mycket tid och minne de kräver som en funktion av grafens storlek. Lite löst uttryckt
 låter vi $T(G)$ vara antalet operationer som vår algoritm utför för en graf $G$, där en operation är någon ``liten'' instruktion som en dator kan utföra (t.ex.
 addera två tal, läsa ett heltal ur minnet). Vi gör också det förenklade antagandet att alla sådana operationer tar uniform tid (vilket oftast inte är sant när en algoritm
-körs på en riktig dator). En mer omfattande behandling av algoritmanalys finns i Knuth~\cite{Knuth1:1997}).
+körs på en riktig dator). En mer omfattande behandling av algoritmanalys finns i Knuth~\cite{Knuth1:1997}.
 
 För två reellvärda funktioner $f$ och $g$ använder vi notationen $g(n) = O(f(n))$ om det existerar ett $C > 0, x_o$ så att för alla $x \ge x_o$ är $\frac{g(n)}{f(n)} < C$. Detta betyder rent intuitivt att $g(n)$
 inte växer snabbare än $f(n)$. Vi kommer oftast använda denna asypmtotiska notation för att beskriva körtiden och minnesanvändningen för våra algoritmer.
@@ -184,7 +183,7 @@ En tämligen enkel gräns är $\chi(G) \le d + 1$, där $d$ är det största ant
 
     Eftersom $u$ har högst $d$ grannar finns det enligt lådprincipen minst en färg sådan att ingen av $u$:s grannar har den färgen. Om vi tilldelar
     $u$ den färgen minskar antalet par av grannar med samma färg. Eftersom vi hade färgat grafen så att antalet par var minimerat måste
-    antagandet att ett par $(u, v)$ varit falskt, alltså är grafen korrekt färgad.
+    antagandet att ett sådant par $(u, v)$ existerar varit falskt, alltså är grafen korrekt färgad.
 \end{proof}
 
 Eftersom ett hörn som mest kan ha alla övriga hörn som grannar följer även
@@ -209,7 +208,7 @@ för den senare algoritmen blir som följer:
 \clearpage
 
 \begin{algorithmic}[1]
-    \Procedure{Color}{$G$, $A$, $i$, $k$}\Comment{Givet att de första $i-1$ hörnen har färgerna $A_k$, generera alla färgningar med högst $k$ färger.}
+    \Procedure{Color}{$G$, $A$, $i$, $k$}\Comment{Givet att de första $i-1$ hörnen har färgerna $A_1, ..., A_{i-1}$, generera alla färgningar med högst $k$ färger.}
         \If{$i = |V| + 1$}
             \ForAll{$(u, v) \in E$}
                 \If{$A_u = A_v$}
@@ -242,7 +241,7 @@ för den senare algoritmen blir som följer:
     \EndProcedure
 \end{algorithmic}
 
-Vi kan göra en liten förbättring av algoritmen. Observera att två färgningar som är lika förutom en permutation av färgerna kommer betraktas flera gånger, trots att de för oss är ekvivalenta. Om vi inte genererar färgningar som är en färgning med permuterade färger behöver vi bara titta på alla partitioner av hörnen med högst $d$ delar. Det finns totalt $\sum_{k=0}^d{S(n, k)}$ sådana, där $S(n, k)$ är $S$ är Stirlingtalen av andra ordningen.
+Vi kan göra en liten förbättring av algoritmen. Observera att två färgningar som är lika förutom en permutation av färgerna kommer betraktas flera gånger, trots att de för oss är ekvivalenta. Om vi inte genererar färgningar som är en färgning med permuterade färger behöver vi bara titta på alla partitioner av hörnen med högst $d$ delar. Det finns totalt $\sum_{k=0}^d{S(n, k)}$ sådana, där $S(|V|, k)$ är Stirlingtalen av andra ordningen.
 
 Denna modifikation kräver i princip endast en ändring av ``för alla $c$ mellan 1 till $\min(k, \max(A_i) + 1)$'' i proceduren som genererar färgningarna (se Knuth~\cite{Knuth4a:1997}).
 
@@ -254,22 +253,21 @@ Genom att kontrollera detta när vi tilldelar varje hörn sin färg kommer vi f�
 
 Från definitionen av färgning vet vi att en delmängd av hörn kan ha samma färg om och endast om delmängden är en oberoende mängd.
 
-Detta ger oss ett alternativ till bruteforce-algoritmerna. Antag att vi har färgat en delmängd $S$ av hörnen, och ska färga $V \setminus S$. Vi provar då att välja någon oberoende mängd $S'$ som nästa färg, och färgar $(V \setminus S) \setminus S'$. Om vi väljer den oberoende mängd som ger det bästa resultatet kan vi ställa upp en rekurrens för $\chi(G)$:
+Detta ger oss ett alternativ till bruteforce-algoritmerna. Antag att vi har färgat en delmängd $A$ av hörnen, och ska färga $V \setminus A$. Vi provar då att välja någon oberoende mängd $A'$ som nästa färg, och färgar $(V \setminus A) \setminus A'$. Om vi väljer den oberoende mängd som ger det bästa resultatet kan vi ställa upp en rekurrens för $\chi(G)$:
 
-$$\chi(G[S]) = 1 + \min_{I \in I(G[S])}\{\chi(G[S \setminus I])\}$$
+$$\chi(G[V]) = 1 + \min_{S \in I(G[S])}\{\chi(G[V \setminus S])\}$$
 
 med
 
 basfallet att $\chi(G) = 0$ om $G$ är den tomma grafen.
 
-Här betyder $G[S]$ den graf som fås genom att ta mängden hörn $S$ och alla kanter som har båda ändpunkter i $S$ (kallad för den \emph{inducerade subgrafen} av $S$).
+Här har vi låtit $I(G)$ vara mängden oberoende mängder av grafen $G$, och $G[S]$ står för den graf som fås genom att ta mängden hörn $S$ och alla kanter som har båda ändpunkter i $S$ (kallad för den \emph{inducerade subgrafen} av $S$).
 
 Det finns högst $2^n$ delmängder (och därmed oberoende delmängder) av en graf med $n$ hörn. Om vi bygger upp en tabell över alla delresultat
 i rekurrensen får vi tidskomplexiteten
 
 $$O(\sum_{S \subseteq V}{|I(G[S])|}) = O(\sum^n_{k=0}{{n \choose k}2^k}) = O(3^n)$$
 
-Här har vi låtit $I(G)$ vara mängden oberoende mängder av grafen $G$.
 
 Observera att det faktiskt inte är nödvändigt att prova att låta \emph{alla} oberoende mängder utgöra nästa färg. Det räcker med att prova alla maximala oberoende mängder. Det finns dock högst $3^{n/3}$ sådana (Miller~\cite{Miller:1960}), och de kan även listas i tid $O(3^{n/3})$ (Eppstein~\cite{Eppstein:2003}).
 
@@ -310,27 +308,29 @@ Betrakta alla oberoende mängder som inte inkluderar något element i $X$. Om m�
 eller så består mängden av $v$ och andra element. Då räknas mängden i $a(X \cup N(v) \cup v)$ (där $N(v)$ är alla hörn som är grannar till $v$), eftersom vi då inte får inkludera
 några hörn som är grannar till $v$.
 
-Att evaluera inklusion/exklusions-formeln tar $O(2^n)$ tid. Att beräkna $a(X)^k$ för alla $2^{|V|}$  värden på $X$ tar $O(2^n \cdot \lg k$) tid. Vi kan behöva
-göra detta för $lg |V|$ olika värden på $k$ eftersom vi binärsöker över $k$. Totalt blir tidskomplexiteten $O(2^|V| \lg^2 n)$.
+Att evaluera inklusion/exklusions-formeln tar $O(2^{|V|})$ tid. Att beräkna $a(X)^k$ för alla $2^{|V|}$  värden på $X$ tar $O(2^{|V|} \cdot \lg k$) multiplikationer. Vi kan behöva
+göra detta för $lg |V|$ olika värden på $k$ eftersom vi binärsöker över $k$. Totalt blir tidskomplexiteten $O(2^{|V|} \lg^2 |V|)$.
 
-Värdena på $a(X)^k$ är dock så pass stora att de inte ryms i ett 64-bitars heltal. Algoritmen kräver alltså stora heltal, vilket kräver ytterligare operationer för
-multiplikation ($lg^2 2^n = O(n^2)$). Totalt tar algoritmen alltså $O(2^|V| \lg^2 n \cdot n^2)$ tid. Biblioteket GMP användes för stora tal.
+Värdena på $a(X)^k$ är dock så pass stora att de inte ryms i ett 64-bitars heltal ($a(X)$ kan ha upp till $|V|$ bitar, så $a(X)^k$ kan kräva $|V|k$ bitar, där $k$ kan vara upp till $n$. Att multiplicera två tal tar alltså
+$\lg^2 2^{|V|k} = O((|V|k)^2) = O(|V|^4)$ operationer (då den vanliga algoritmen för multiplikation är kvadratisk i antal bitar). Totalt tar algoritmen alltså $O(2^{|V|} \lg^2 |V| \cdot |V|^4)$ tid.
 
 \chapter{Körning av programmen}
 Algoritmerna implementerades i programmeringsspråket C++. De kompilerades med GCC g++ version 4.6.3 och testades på en Linux-server på KTH (kernelversion 3.2.0).
 
 De kompilerades med kommandot
 \begin{minted}{bash}
-    g++ -Ofast -static program.cpp
+    g++ -Ofast program.cpp
 \end{minted}
 
-och kördes sedan med
+För inklusion/exklusions-algoritmen användes istället
 
 \begin{minted}{bash}
-    time ./a.out < test.in
+    g++ -Ofast -lgmp -lgmpxx program.cpp
 \end{minted}
 
-för att mäta tiden som programmet tog. Alla algoritmer använde samma indata-rutin.
+för att kompliera med biblioteket GMP för stora tal.
+
+Alla algoritmer använde samma indata-rutin.
 
 Om en algoritm tog mer än 10 minuter för att lösa en viss graf avbröts programmet.
 

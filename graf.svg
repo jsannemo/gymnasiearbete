@@ -14,7 +14,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="graf.svg"
+   inkscape:export-filename="/home/jsannemo/Documents/skola/projarbete/graf.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -34,10 +37,10 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1680"
-     inkscape:window-height="988"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-width="1600"
+     inkscape:window-height="876"
+     inkscape:window-x="1920"
+     inkscape:window-y="432"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -58,13 +61,13 @@
      transform="translate(-118.78571,-59.719325)">
     <path
        sodipodi:type="arc"
-       style="fill:#ff9955;fill-opacity:1;stroke:#000000"
+       style="fill:#ececec;fill-opacity:1;stroke:#000000"
        id="path2987"
        sodipodi:cx="133.57143"
        sodipodi:cy="74.862183"
        sodipodi:rx="14.285714"
        sodipodi:ry="14.642858"
-       d="m 147.85714,74.862183 c 0,8.087027 -6.39593,14.642857 -14.28571,14.642857 -7.88979,0 -14.28572,-6.55583 -14.28572,-14.642857 0,-8.087027 6.39593,-14.642858 14.28572,-14.642858 7.88978,0 14.28571,6.555831 14.28571,14.642858 z" />
+       d="m 147.85714,74.862183 a 14.285714,14.642858 0 1 1 -28.57143,0 14.285714,14.642858 0 1 1 28.57143,0 z" />
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -80,7 +83,7 @@
     <path
        transform="translate(107.14286,1.4285702)"
        sodipodi:type="arc"
-       style="fill:#ff9955;fill-opacity:1;stroke:#000000"
+       style="fill:#ececec;fill-opacity:1;stroke:#000000"
        id="path2987-0"
        sodipodi:cx="133.57143"
        sodipodi:cy="74.862183"
@@ -102,7 +105,7 @@
     <path
        transform="translate(1.4285784,86.071427)"
        sodipodi:type="arc"
-       style="fill:#ff9955;fill-opacity:1;stroke:#000000"
+       style="fill:#ececec;fill-opacity:1;stroke:#000000"
        id="path2987-8"
        sodipodi:cx="133.57143"
        sodipodi:cy="74.862183"
@@ -124,7 +127,7 @@
     <path
        transform="translate(91.428574,71.785713)"
        sodipodi:type="arc"
-       style="fill:#ff9955;fill-opacity:1;stroke:#000000"
+       style="fill:#ececec;fill-opacity:1;stroke:#000000"
        id="path2987-4"
        sodipodi:cx="133.57143"
        sodipodi:cy="74.862183"
